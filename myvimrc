@@ -1,0 +1,331 @@
+" vundle
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+set nu
+set showcmd
+set magic
+set cursorline
+"set mouse=a
+set go=
+set showmatch
+set matchtime=1
+set nobackup
+set ruler
+set autoindent
+set confirm
+
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set nocompatible
+set expandtab
+set backspace=indent,eol,start
+
+set wildmenu
+set fo=cqrt
+set laststatus=2
+set tw=0
+"set colorcolumn=+1
+set ww=<,>,h,l
+set noeb visualbell
+let mapleader = " "
+map ; :
+map q; q:
+map <LEADER>/ :!
+map <LEADER>r :r !
+map <LEADER>sr :%s/
+
+"custom
+set splitright
+set splitbelow
+nnoremap Q :q<CR>
+nnoremap S :w<CR>
+
+map <LEADER>rc :e ~/.vimrc<CR>
+map <LEADER><CR> :nohlsearch<CR>
+
+set hlsearch
+set incsearch
+"set clipboard=unnamed
+let &t_ut=''
+
+" ===
+" === Window management
+" ===
+" Use <space> + new arrow keys for moving the cursor around windows
+map <LEADER>w <C-w>w
+map <LEADER>u <C-w>k
+map <LEADER>e <C-w>j
+map <LEADER>n <C-w>h
+map <LEADER>i <C-w>l
+"map <LEADER>r <C-w>r
+
+map su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
+map se :set splitbelow<CR>:split<CR>
+map sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
+map si :set splitright<CR>:vsplit<CR>
+
+" Resize splits with arrow keys
+map <LEADER><up> :res +5<CR>
+map <LEADER><down> :res -5<CR>
+map <LEADER><left> :vertical resize-5<CR>
+map <LEADER><right> :vertical resize+5<CR>
+
+" Place the two screens up and down
+noremap sh <C-w>t<C-w>K
+" Place the two screens side by side
+noremap sv <C-w>t<C-w>H
+" Rotate screens
+noremap srh <C-w>b<C-w>K
+noremap srv <C-w>b<C-w>H
+
+
+" ===
+" === Tab management
+" ===
+" Create a new tab with tu
+map tu :tabe<CR>
+" Move around tabs with tn and ti
+map tn :-tabnext<CR>
+map ti :+tabnext<CR>
+" Move the tabs with tmn and tmi
+map tmn :-tabmove<CR>
+map tmi :+tabmove<CR>
+
+" ===
+" === Other useful stuff
+" ===
+
+" Press space twice to jump to the next '<++>' and edit it
+map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4i
+
+map ` ~
+
+set scrolloff=5
+" ===
+" === Restore Cursor Position
+" ===
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+set showcmd
+set ignorecase
+set smartcase
+"set tags=tags;/
+set tags+=~/.vim/systags
+
+set foldmethod=indent
+set foldlevel=99
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+syntax enable
+
+
+" encoding
+set fencs=utf-8,usc-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+set fileencoding=utf-8
+
+noremap <C-U> 5<C-y>
+noremap <C-E> 5<C-e>
+inoremap <C-U> <Esc>5<C-y>a
+inoremap <C-E> <Esc>5<C-e>a
+
+noremap s <nop>
+
+" Spelling Check with <space>sc
+map <LEADER>sc :set spell!<CR>
+noremap <C-x> ea<C-x>s
+inoremap <C-x> <Esc>ea<C-x>s
+
+map tx :r !figlet 
+
+" Molokai
+set background=dark
+colorscheme PaperColor
+"colorscheme molokai
+highlight NonText guibg=#060606
+highlight Folded  guibg=#0A0A0A guifg=#9090D0
+
+" Compile function
+map r :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+  exec "w"
+  if &filetype == 'c'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'cpp'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'java'
+    exec "!javac %"
+    exec "!time java %<"
+  elseif &filetype == 'sh'
+    :!time bash %
+  elseif &filetype == 'python'
+    silent! exec "!clear"
+    exec "!time python3 %"
+  elseif &filetype == 'html'
+    exec "!firefox % &"
+  elseif &filetype == 'markdown'
+    exec "MarkdownPreview"
+  elseif &filetype == 'vimwiki'
+    exec "MarkdownPreview"
+  endif
+endfunc
+
+nnoremap R :w<CR>:source $MYVIMRC<CR>
+
+map <F2> :call SetTitle()<CR>
+
+func SetTitle()
+let l = 0
+let l = l + 1 | call setline(l,'/******************************')
+let l = l + 1 | call setline(l,' *File name: '.expand("%"))
+let l = l + 1 | call setline(l,' *Author: wzhzzmzzy')
+let l = l + 1 | call setline(l,' *Created Time: '.strftime("%c"))
+let l = l + 1 | call setline(l,' *TODO:')
+let l = l + 1 | call setline(l,'******************************/')
+let l = l + 1 | call setline(l,'')
+let l = l + 1 | call setline(l,'#include <cstdio>')
+let l = l + 1 | call setline(l,'#include <cstring>')
+let l = l + 1 | call setline(l,'#include <cstdlib>')
+let l = l + 1 | call setline(l,'#include <iostream>')
+let l = l + 1 | call setline(l,'#include <string>')
+let l = l + 1 | call setline(l,'#include <algorithm>')
+let l = l + 1 | call setline(l,'#include <vector>')
+let l = l + 1 | call setline(l,'#include <queue>')
+let l = l + 1 | call setline(l,'#include <set>')
+let l = l + 1 | call setline(l,'#include <map>')
+let l = l + 1 | call setline(l,'')
+let l = l + 1 | call setline(l,'using namespace std;')
+let l = l + 1 | call setline(l,'')
+endfunc
+
+map <F3> :call SetTitle2()<CR>
+func SetTitle2()
+let l = 0
+let l = l + 1 | call setline(l,'/******************************')
+let l = l + 1 | call setline(l,' *File name: '.expand("%"))
+let l = l + 1 | call setline(l,' *Author: wzhzzmzzy')
+let l = l + 1 | call setline(l,' *Created Time: '.strftime("%c"))
+let l = l + 1 | call setline(l,' *TODO:')
+let l = l + 1 | call setline(l,'******************************/')
+let l = l + 1 | call setline(l,'')
+let l = l + 1 | call setline(l,'#include <bits/stdc++.h>')
+let l = l + 1 | call setline(l,'using namespace std;')
+let l = l + 1 | call setline(l,'')
+endfunc
+
+" Nerd Tree
+let NERDChristmasTree=0
+let NERDTreeWinSize=40
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowBookmarks=1
+let NERDTreeWinPos="left"
+autocmd vimenter * if !argc() | NERDTree | endif 
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+map tt :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
+let NERDTreeMapUpdir = ""
+let NERDTreeMapUpdirKeepOpen = "l"
+let NERDTreeMapOpenSplit = ""
+let NERDTreeOpenVSplit = ""
+let NERDTreeMapActivateNode = "i"
+let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapPreview = ""
+let NERDTreeMapCloseDir = "n"
+let NERDTreeMapChangeRoot = "y"
+
+
+
+map <C-p> :CtrlP<CR>
+
+" Tagbar
+let g:tagbar_width=35
+let g:tagbar_autofocus=1
+"map <silent> T :TagbarOpenAutoClose<CR>
+map <silent> T :TagbarToggle<CR>
+
+" ===
+" === vim-table-mode
+" ===
+map <LEADER>tm :TableModeToggle<CR>
+
+" ===
+" === MarkdownPreview
+" ===
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1
+    \ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
+
+let g:vimwiki_list = [{
+  \ 'automatic_nested_syntaxes':1,
+  \ 'path_html': '~/wiki_html',
+  \ 'path': '~/wiki',
+  \ 'template_path': '~/.vim/vimwiki/template/',
+  \ 'syntax': 'markdown',
+  \ 'ext':'.md',
+  \ 'template_default':'markdown',
+  \ 'custom_wiki2html': '~/.vim/vimwiki/wiki2html.sh',
+  \ 'template_ext':'.html'
+\}]
+
+au BufRead,BufNewFile *.md set filetype=vimwiki
+
+let g:taskwiki_sort_orders={"C": "pri-"}
+let g:taskwiki_syntax = 'markdown'
+let g:taskwiki_markdown_syntax='markdown'
+let g:taskwiki_markup_syntax='markdown'
+
+" ===
+" === ale
+" ===
+let b:ale_linters = [] "['pylint']
+" let b:ale_fixers = ['autopep8', 'yapf']
+let g:ale_python_pylint_options = "--extension-pkg-whitelist=pygame"
+
+" YouCompleteMe
+nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap g/ :YcmCompleter GetDoc<CR>
+nnoremap gt :YcmCompleter GetType<CR>
+nnoremap gr :YcmCompleter GoToReferences<CR>
+let g:ycm_autoclose_preview_window_after_completion=0
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_use_clangd = 0
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+let g:mdip_imgdir = 'images'
+let g:mdip_imgname = 'image'
+autocmd FileType markdown nnoremap <silent> <C-p> :call mdip#MarkdownClipboardImage()<CR>
