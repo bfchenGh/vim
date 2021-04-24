@@ -83,6 +83,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set splitright
 set splitbelow
 
+"set mouse=a
 " ===
 " === Status/command bar
 " ===
@@ -237,6 +238,15 @@ map ti :+tabnext<CR>
 " Move the tabs with tmn and tmi
 map tmn :-tabmove<CR>
 map tmi :+tabmove<CR>
+nnoremap <LEADER>1 1gt
+nnoremap <LEADER>2 2gt
+nnoremap <LEADER>3 3gt
+nnoremap <LEADER>4 4gt
+nnoremap <LEADER>5 5gt
+nnoremap <LEADER>6 6gt
+nnoremap <LEADER>7 7gt
+nnoremap <LEADER>8 8gt
+nnoremap <LEADER>9 9gt
 
 
 " ===
